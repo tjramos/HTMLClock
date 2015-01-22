@@ -1,0 +1,15 @@
+body {
+   background-color: #33CCFF;
+   color: white;
+   text-align: center;
+   font-family: Arial;
+}
+
+#clock {
+   font-size: 144px;
+}
+
+.title {
+   font-size: 32px;
+   color: yellow;
+}
