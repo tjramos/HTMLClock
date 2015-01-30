@@ -12,7 +12,7 @@ function getTemp() {
       $("#forecastIcon").attr("src", "img/" + data.daily.icon + ".png");
       
       var className;
-      var maxTemp = data.daily.temperatureMax;
+      var maxTemp = data.daily.data[0].temperatureMax;
       
       if(maxTemp < 60)
          className = "cold";
@@ -27,6 +27,4 @@ function getTemp() {
       
       $("body").addClass(className);
    });
-   
-   console.log();
 }
