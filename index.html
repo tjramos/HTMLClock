@@ -2,7 +2,7 @@
 <html>
    <head>
       <title>
-         timclock
+         tim(e)
       </title>
       
       <link rel="stylesheet" type="text/css" href="css/clock.css">
@@ -10,7 +10,7 @@
       <meta charset="utf-8">
    </head>
    
-   <body onload="getTime();">
+   <body onload="getTime(); getTemp();">
       
       <p class="title">
          tim(e)
@@ -19,9 +19,18 @@
       <h1 id="clock">
       </h1>
       
+      <div id="forecastLabel">
+         
+      </div>
+      
+      <img id="forecastIcon">
+      
       <h2>
          no alarms set
       </h2>
+      
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js">
+      </script>
       
       <script src="js/clock.js">
       </script>
