@@ -28,3 +28,69 @@ function getTemp() {
       $("body").addClass(className);
    });
 }
+
+function showAlarmPopup() {
+   $("#mask").removeClass("hide"); 
+   $("#popup").removeClass("hide"); 
+}
+
+function hideAlarmPopup() {
+   $("#mask").addClass("hide"); 
+   $("#popup").addClass("hide"); 
+}
+
+function insertAlarm(time, alarmName) {
+   var div = $("<div>").addClass("flexable");
+   div.append($("<div>").addClass("name").html(alarmName + " "));
+   div.append($("<div>").addClass("time").html(time + " "));
+   div.append($('<input type="button" onClick="deleteAlarm(\'' + alarmName + '\')" value="Delete">'));
+   div.attr("id", alarmName);
+   $("#alarms").append(div);
+}
+
+function addAlarm() {
+   var hours, mins, ampm, alarmName, time;
+   hours = $("#hours option:selected").text();
+   mins = $("#mins option:selected").text();
+   ampm = $("#ampm option:selected").text();
+   time = hours + ":" + mins + " " + ampm;
+   alarmName = $("#alarmName").val();
+   
+   var AlarmObject = Parse.Object.extend("Alarm");
+   var alarmObject = new AlarmObject();
+
+   alarmObject.save({"time": time, "alarmName": alarmName}, {
+      success: function(object) {
+      	insertAlarm(time, alarmName);
+         hideAlarmPopup();
+		}
+   });
+}
+function getAllAlarms() {
+   Parse.initialize("yJIWV3DZFeQImNmtdoCnc5N9kOEMoJS2Va1uTPe1", "2UUu4iYATzGXDarp65nVSqKeHxKcmKYrsaiRClR5");
+   var AlarmObject = Parse.Object.extend("Alarm");
+   var query = new Parse.Query(AlarmObject);
+   query.find({
+      success: function(results) {
+         for (var i = 0; i < results.length; i++) { 
+            insertAlarm(results[i].get("time"), results[i].get("alarmName"));
+         }
+      }
+   });
+}
+
+function deleteAlarm(alarmName) {
+   $('#' + alarmName).remove();
+   var AlarmObject = Parse.Object.extend("Alarm");
+	var query = new Parse.Query(AlarmObject);
+   query.find({
+      success: function(results) {
+         for(var i = 0; i < results.length; i++) {
+            if(results[i].attributes.alarmName === alarmName) {
+               results[i].destroy({});
+               break;
+            }
+         }
+      }
+   });
+}
