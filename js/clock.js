@@ -87,7 +87,7 @@ function getAllAlarms(userid) {
    query.find({
       success: function(results) {
          for (var i = 0; i < results.length; i++) { 
-            if (userid == results[i].get("userid"))
+            if (userid == results[i]["attributes"]["userid"])
                insertAlarm(results[i].get("time"), results[i].get("alarmName"));
          }
       }
