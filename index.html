@@ -8,6 +8,8 @@
       <link rel="stylesheet" type="text/css" href="css/clock.css">
       <link rel="stylesheet" type="text/css" href="css/alarm.css">
       
+      <script src="https://apis.google.com/js/client:platform.js" async defer></script>
+
       <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js">
       </script>
       
@@ -19,7 +21,7 @@
       <meta charset="utf-8">
    </head>
    
-   <body onload="getTime(); getTemp(); getAllAlarms();">
+   <body onload="getTime(); getTemp();">
       
       <p class="title">
          tim(e)
@@ -136,6 +138,17 @@
             </div>
          </div>
       </div>
+
+      <span id="signinButton">
+        <span
+          class="g-signin"
+          data-callback="signinCallback"
+          data-clientid="109879975777-65s95ith7s9cqpb9uohqruqtgdjo693g.apps.googleusercontent.com"
+          data-cookiepolicy="single_host_origin"
+          data-requestvisibleactions="http://schema.org/AddAction"
+          data-scope="https://www.googleapis.com/auth/plus.login">
+        </span>
+      </span>
 
    </body>
 </html>

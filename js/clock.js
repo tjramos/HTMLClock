@@ -1,3 +1,16 @@
+var userid = "";
+
+function signinCallback(authResult) {
+    if (authResult['status']['signed_in']) {
+      document.getElementById('signinButton').setAttribute('style', 'display: none');
+      gapi.client.load('plus', 'v1', loaded);
+      getAllAlarms(authResult);
+      } else {
+        console.log('Sign-in state: ' + authResult['error']);
+        userid = "";
+      }
+}
+
 function getTime() {
    var d = new Date();
    document.getElementById("clock").innerHTML = d.toLocaleTimeString();
@@ -59,21 +72,23 @@ function addAlarm() {
    var AlarmObject = Parse.Object.extend("Alarm");
    var alarmObject = new AlarmObject();
 
-   alarmObject.save({"time": time, "alarmName": alarmName}, {
+   alarmObject.save({"time": time, "alarmName": alarmName, "userid": userid}, {
       success: function(object) {
       	insertAlarm(time, alarmName);
          hideAlarmPopup();
 		}
    });
 }
-function getAllAlarms() {
+
+function getAllAlarms(userid) {
    Parse.initialize("yJIWV3DZFeQImNmtdoCnc5N9kOEMoJS2Va1uTPe1", "2UUu4iYATzGXDarp65nVSqKeHxKcmKYrsaiRClR5");
    var AlarmObject = Parse.Object.extend("Alarm");
    var query = new Parse.Query(AlarmObject);
    query.find({
       success: function(results) {
          for (var i = 0; i < results.length; i++) { 
-            insertAlarm(results[i].get("time"), results[i].get("alarmName"));
+            if (userid == results[i].get("userid"))
+               insertAlarm(results[i].get("time"), results[i].get("alarmName"));
          }
       }
    });
